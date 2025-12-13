@@ -55,7 +55,9 @@ int main(int ac, char **av)
 			{
 				int x = iterations_mandel(c);
 				if (x == -1)
-					printf("g");
+					printf("@");
+				else if (x > 2 && x < 10)
+					printf("%d", x);
 				else
 					printf(" ");
 				c.real += 0.02;
@@ -63,7 +65,7 @@ int main(int ac, char **av)
 		c.i += 0.02;
 		}
 	}
-	if (ac == 4 && strncmp(av[1], "julia", 5) == 0)
+	else if (ac == 4 && strncmp(av[1], "julia", 5) == 0)
 	{
 		Z.real = strtof(av[2], NULL);
 		Z.i = strtof(av[3], NULL);
@@ -75,7 +77,9 @@ int main(int ac, char **av)
 			{
 				int x = iterations_julia(Z, c);
 				if (x == -1)
-					printf("g");
+					printf("@");
+				else if (x > 2 && x < 10)
+					printf("%d", x);
 				else
 					printf(" ");
 				c.real += 0.02;
