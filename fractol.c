@@ -55,7 +55,7 @@ int main(int ac, char **av)
 			{
 				int x = iterations_mandel(c);
 				if (x == -1)
-					printf("@");
+					printf("=");
 				else if (x > 2 && x < 10)
 					printf("%d", x);
 				else
@@ -77,7 +77,7 @@ int main(int ac, char **av)
 			{
 				int x = iterations_julia(Z, c);
 				if (x == -1)
-					printf("@");
+					printf("=");
 				else if (x > 2 && x < 10)
 					printf("%d", x);
 				else
