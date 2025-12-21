@@ -6,7 +6,7 @@
 /*   By: lstarek <lstarek@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 17:15:46 by lstarek           #+#    #+#             */
-/*   Updated: 2025/12/21 17:21:21 by lstarek          ###   ########.fr       */
+/*   Updated: 2025/12/21 19:56:44 by lstarek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_window
 t_complex	sq_imag(t_complex num);
 t_complex	add_imag(t_complex num1, t_complex num2);
 double		ft_pow(double x, double y);
-int		ft_isnan(double fp);
+int			ft_isnan(double fp);
 
 int			iterations_mandel(t_complex c);
 int			iterations_julia(t_complex c, t_complex z);

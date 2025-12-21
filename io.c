@@ -25,9 +25,9 @@ double	ft_strtof_util(double fp, char after_comma, char c)
 {
 	if (after_comma > 0)
 	{
-		fp *= ft_pow(10, after_comma-1);
+		fp *= ft_pow(10, after_comma - 1);
 		fp += c - 48;
-		fp /= ft_pow(10, after_comma-1);
+		fp /= ft_pow(10, after_comma - 1);
 	}
 	else
 	{
@@ -45,11 +45,8 @@ double	ft_strtof(char *str)
 
 	after_comma = 0;
 	fp = 0.0;
-	if (*str == '-')
-	{
-		is_negative = 1;
-		str++;
-	}
+	is_negative = (*str == '-');
+	str += is_negative;
 	while (*str != 0)
 	{
 		if (ft_isdigit(*str))
