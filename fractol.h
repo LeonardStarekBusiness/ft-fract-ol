@@ -6,28 +6,26 @@
 /*   By: lstarek <lstarek@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 17:15:46 by lstarek           #+#    #+#             */
-/*   Updated: 2025/12/18 15:18:07 by lstarek          ###   ########.fr       */
+/*   Updated: 2025/12/21 17:21:21 by lstarek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
-# include <math.h>
-# include <stdio.h>
-# include <string.h>
 # include <stdlib.h>
 # include <mlx.h>
+# include "libft/libft.h"
+# define NAN (0.0f / 0.0f)
+# define KEY_C 99
+# define ARROW_LEFT   65361
+# define ARROW_UP     65362
+# define ARROW_RIGHT  65363
+# define ARROW_DOWN   65364
 # ifndef ITERATIONS
-#  define ITERATIONS 100
+#  define ITERATIONS 150
 # endif
-# ifndef WIDTH
-#  define WIDTH 800
-# endif
-# ifndef HEIGHT
-#  define HEIGHT 800
-# endif
-# ifndef COLORSCHEME
-#  define COLORSCHEME 2
+# ifndef WIN_SIZE
+#  define WIN_SIZE 800
 # endif
 
 typedef struct s_complex
@@ -44,24 +42,38 @@ typedef struct s_coord
 
 typedef struct s_window
 {
-	void	*mlx;
-	void	*window;
-	void	*img;
-	char	*addr;
-	int		bpp;
-	int		line_len;
-	int		endian;
+	void		*mlx;
+	void		*window;
+	void		*img;
+	int			*addr;
+	int			bpp;
+	int			line_len;
+	int			endian;
+
+	char		*type;
+	t_complex	z;
+	int			scheme;
+	t_complex	topleft;
+	double		size;
 }	t_window;
 
 t_complex	sq_imag(t_complex num);
 t_complex	add_imag(t_complex num1, t_complex num2);
-void		print_i(t_complex num);
+double		ft_pow(double x, double y);
+int		ft_isnan(double fp);
 
-void		make_window(int julia, t_complex Z);
+int			iterations_mandel(t_complex c);
+int			iterations_julia(t_complex c, t_complex z);
+int			iterations_burning_ship(t_complex c);
+
+void		make_window(t_window *win);
 void		draw_mandel(t_window *win);
-void		draw_julia(t_window *win, t_complex Z);
-void		put_pixel(t_window *win, int x, int y, int color);
+void		draw_julia(t_window *win);
+void		draw_burning_ship(t_window *win);
 t_coord		transform(t_complex point, t_complex topleft, double size);
 
-int			colorscheme(int color);
+int			colorscheme(int color, int scheme);
+
+void		throw_message(void);
+double		ft_strtof(char *str);
 #endif

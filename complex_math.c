@@ -38,7 +38,22 @@ t_coord	transform(t_complex point, t_complex topleft, double size)
 {
 	t_coord		fpoint;
 
-	fpoint.x = (point.real - topleft.real) * (WIDTH / size);
-	fpoint.y = (-point.i - topleft.i) * (HEIGHT / size);
+	fpoint.x = (point.real - topleft.real) * ((double)WIN_SIZE / size);
+	fpoint.y = (topleft.i + size - point.i) * ((double)WIN_SIZE / size);
 	return (fpoint);
+}
+
+int	ft_isnan(double fp)
+{
+	return (fp != fp);
+}
+
+double	ft_pow(double x, double y)
+{
+	while (y > 0)
+	{
+		x *= x;
+		y--;
+	}
+	return (x);
 }
