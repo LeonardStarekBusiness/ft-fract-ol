@@ -12,24 +12,6 @@
 
 #include "fractol.h"
 
-int	iterations_mandel(t_complex c)
-{
-	int			i;
-	t_complex	z;
-
-	i = 0;
-	z.real = 0.0;
-	z.i = 0.0;
-	while (i < ITERATIONS)
-	{
-		if (((z.real * z.real) + (z.i * z.i)) > 4)
-			return (i);
-		z = add_imag(sq_imag(z), c);
-		i++;
-	}
-	return (-1);
-}
-
 t_complex	c_abs(t_complex complex)
 {
 	if (complex.real < 0.0)
@@ -39,7 +21,7 @@ t_complex	c_abs(t_complex complex)
 	return (complex);
 }
 
-int	iterations_burning_ship(t_complex c)
+int	iterations_mandel(t_complex c, int depth)
 {
 	int			i;
 	t_complex	z;
@@ -47,8 +29,53 @@ int	iterations_burning_ship(t_complex c)
 	i = 0;
 	z.real = 0.0;
 	z.i = 0.0;
-	while (i < ITERATIONS)
+	while (i < depth)
 	{
+		if (ft_isnan(z.real) || ft_isnan(z.i) || ft_isnan(c.real)
+			|| ft_isnan(c.i))
+			break ;
+		if (((z.real * z.real) + (z.i * z.i)) > 4)
+			return (i);
+		z = add_imag(sq_imag(z), c);
+		i++;
+	}
+	return (-1);
+}
+
+int	iterations_multi(t_complex c, int exp, int depth)
+{
+	int			i;
+	t_complex	z;
+
+	i = 0;
+	z.real = 0.0;
+	z.i = 0.0;
+	while (i < depth)
+	{
+		if (ft_isnan(z.real) || ft_isnan(z.i) || ft_isnan(c.real)
+			|| ft_isnan(c.i))
+			break ;
+		if (((z.real * z.real) + (z.i * z.i)) > 4)
+			return (i);
+		z = add_imag(pow_imag(z, exp), c);
+		i++;
+	}
+	return (-1);
+}
+
+int	iterations_burning_ship(t_complex c, int depth)
+{
+	int			i;
+	t_complex	z;
+
+	i = 0;
+	z.real = 0.0;
+	z.i = 0.0;
+	while (i < depth)
+	{
+		if (ft_isnan(z.real) || ft_isnan(z.i) || ft_isnan(c.real)
+			|| ft_isnan(c.i))
+			break ;
 		if (((z.real * z.real) + (z.i * z.i)) > 4)
 			return (i);
 		z = add_imag(sq_imag(c_abs(z)), c);
@@ -57,13 +84,16 @@ int	iterations_burning_ship(t_complex c)
 	return (-1);
 }
 
-int	iterations_julia(t_complex c, t_complex z)
+int	iterations_julia(t_complex c, t_complex z, int depth)
 {
 	int		i;
 
 	i = 0;
-	while (i < ITERATIONS)
+	while (i < depth)
 	{
+		if (ft_isnan(z.real) || ft_isnan(z.i) || ft_isnan(c.real)
+			|| ft_isnan(c.i))
+			break ;
 		if (((z.real * z.real) + (z.i * z.i)) > 4)
 			return (i);
 		z = add_imag(sq_imag(z), c);

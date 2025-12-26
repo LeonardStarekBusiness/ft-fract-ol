@@ -15,14 +15,32 @@
 t_complex	sq_imag(t_complex num)
 {
 	t_complex	square;
-	double		r;
-	double		i;
 
-	r = num.real;
-	i = num.i;
-	square.real = (r * r) - (i * i);
-	square.i = (r * i * 2);
+	square.real = (num.real * num.real) - (num.i * num.i);
+	square.i = (num.real * num.i * 2.0);
 	return (square);
+}
+
+t_complex	mul_imag(t_complex num1, t_complex num2)
+{
+	t_complex	multiple;
+
+	multiple.real = num1.real * num2.real - num1.i * num2.i;
+	multiple.i = num1.real * num2.i + num1.i * num2.real;
+	return (multiple);
+}
+
+t_complex	pow_imag(t_complex num, int exp)
+{
+	t_complex	orig;
+
+	orig = num;
+	while (exp > 1)
+	{
+		num = mul_imag(num, orig);
+		exp--;
+	}
+	return (num);
 }
 
 t_complex	add_imag(t_complex num1, t_complex num2)
@@ -32,28 +50,4 @@ t_complex	add_imag(t_complex num1, t_complex num2)
 	sum.real = num1.real + num2.real;
 	sum.i = num1.i + num2.i;
 	return (sum);
-}
-
-t_coord	transform(t_complex point, t_complex topleft, double size)
-{
-	t_coord		fpoint;
-
-	fpoint.x = (point.real - topleft.real) * ((double)WIN_SIZE / size);
-	fpoint.y = (topleft.i + size - point.i) * ((double)WIN_SIZE / size);
-	return (fpoint);
-}
-
-int	ft_isnan(double fp)
-{
-	return (fp != fp);
-}
-
-double	ft_pow(double x, double y)
-{
-	while (y > 0)
-	{
-		x *= x;
-		y--;
-	}
-	return (x);
 }

@@ -17,7 +17,7 @@ void	throw_message(void)
 	ft_putstr_fd("+-------------------------------------------", 1);
 	ft_putstr_fd("----------------+\n\t\t***PROPER USE***\n\n./fractol", 1);
 	ft_putstr_fd("\tmandelbrot\n\t\tship\n\t\tjulia", 1);
-	ft_putstr_fd("\t\ta\t\tbi\n\n+--------------------------", 1);
+	ft_putstr_fd("\t\ta\t\tbi\n\t\tmulti\t\tn\n+--------------------------", 1);
 	ft_putstr_fd("---------------------------------+\n", 1);
 }
 
@@ -58,7 +58,7 @@ double	ft_strtof(char *str)
 		else if (*str == '.' && after_comma == 0)
 			after_comma = 1;
 		else
-			return (NAN);
+			return (FT_NAN);
 		str++;
 	}
 	if (is_negative)

@@ -12,98 +12,39 @@
 
 #include "fractol.h"
 
-void	draw_burning_ship(t_window *win)
+int	draw_fractal(t_window *win)
 {
-	t_complex	c;
-	t_coord		pos;
-	int			i;
-	double		increment;
-	t_complex	max;
+	int		fractal;
+	t_coord		pixel;
 
-	max.i = win->topleft.i + win->size;
-	max.real = win->topleft.real + win->size;
-	increment = win->size / (WIN_SIZE * 1.1);
-	c.i = win->topleft.i;
-	while (c.i < max.i)
+	fractal = 0;
+	if (ft_strncmp("julia", win->type, 5) == 0)
+		fractal = 1;
+	else if (ft_strncmp("ship", win->type, 5) == 0)
+		fractal = 2;
+	else if (ft_strncmp("multi", win->type, 5) == 0)
+		fractal = 3;
+	pixel.x = 0;
+	win->depth = (int)((double)ITERATIONS * (depth_level(win->size)));
+	while (pixel.x < WIN_SIZE)
 	{
-		c.real = win->topleft.real;
-		while (c.real < max.real)
+		pixel.y = 0;
+		while (pixel.y < WIN_SIZE)
 		{
-			i = iterations_burning_ship(c);
-			pos = transform(c, win->topleft, win->size);
-			win->addr[pos.y * WIN_SIZE + pos.x] = colorscheme(i, win->scheme);
-			c.real += increment;
+			if (fractal == 1)
+				draw_julia(win, pixel);
+			else if (fractal == 2)
+				draw_burning_ship(win, pixel);
+			else if (fractal == 3)
+				draw_multi(win, pixel);
+			else
+				draw_mandel(win, pixel);
+			pixel.y++;
 		}
-		c.i += increment;
+		pixel.x++;
 	}
 	mlx_put_image_to_window(win->mlx, win->window, win->img, 0, 0);
-}
-
-void	draw_mandel(t_window *win)
-{
-	t_complex	c;
-	t_coord		pos;
-	int			i;
-	double		increment;
-	t_complex	max;
-
-	max.i = win->topleft.i + win->size;
-	max.real = win->topleft.real + win->size;
-	increment = win->size / (WIN_SIZE * 1.1);
-	c.i = win->topleft.i;
-	while (c.i < max.i)
-	{
-		c.real = win->topleft.real;
-		while (c.real < max.real)
-		{
-			i = iterations_mandel(c);
-			pos = transform(c, win->topleft, win->size);
-			win->addr[pos.y * WIN_SIZE + pos.x] = colorscheme(i, win->scheme);
-			c.real += increment;
-		}
-		c.i += increment;
-	}
-	mlx_put_image_to_window(win->mlx, win->window, win->img, 0, 0);
-}
-
-void	draw_julia(t_window *win)
-{
-	t_complex	c;
-	t_coord		pos;
-	int			i;
-	double		increment;
-	t_complex	max;
-
-	max.i = win->topleft.i + win->size;
-	max.real = win->topleft.real + win->size;
-	increment = win->size / (WIN_SIZE * 1.1);
-	c.i = win->topleft.i;
-	while (c.i < max.i)
-	{
-		c.real = win->topleft.real;
-		while (c.real < max.real)
-		{
-			i = iterations_julia(win->z, c);
-			pos = transform(c, win->topleft, win->size);
-			win->addr[pos.y * WIN_SIZE + pos.x] = colorscheme(i, win->scheme);
-			c.real += increment;
-		}
-		c.i += increment;
-	}
-	mlx_put_image_to_window(win->mlx, win->window, win->img, 0, 0);
-}
-
-void	initialise(char *type, t_complex z)
-{
-	t_window	win;
-
-	win.scheme = 0;
-	win.topleft.real = -2.5;
-	win.topleft.i = -2.5;
-	win.size = 5.0;
-	win.type = ft_strdup(type);
-	win.z = z;
-	make_window(&win);
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -114,17 +55,25 @@ int	main(int ac, char **av)
 	z.i = 0;
 	if (ac == 2 && ft_strncmp(av[1], "mandelbrot", 10) == 0
 		&& ft_strlen(av[1]) == 10)
-		initialise("mandelbrot", z);
+		initialise("mandelbrot", z, 2);
 	else if (ac == 2 && ft_strncmp(av[1], "ship", 4) == 0
 		&& ft_strlen(av[1]) == 4)
-		initialise("ship", z);
+		initialise("ship", z, 2);
 	else if (ac == 4 && ft_strncmp(av[1], "julia", 5) == 0
 		&& ft_strlen(av[1]) == 5)
 	{
 		z.real = ft_strtof(av[2]);
 		z.i = ft_strtof(av[3]);
 		if (!ft_isnan(z.real) && !ft_isnan(z.i))
-			initialise("julia", z);
+			initialise("julia", z, 2);
+		else
+			throw_message();
+	}
+	else if (ac == 3 && ft_strncmp(av[1], "multi", 5) == 0
+		&& ft_strlen(av[1]) == 5)
+	{
+		if (ft_atoi(av[2]) > 0)
+			initialise("multi", z, ft_atoi(av[2]));
 		else
 			throw_message();
 	}

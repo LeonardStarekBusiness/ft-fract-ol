@@ -21,6 +21,8 @@ int	window_exit(void *data)
 		exit(0);
 	if (window->img)
 		mlx_destroy_image(window->mlx, window->img);
+	if (window->type)
+		free(window->type);
 	if (window->window)
 		mlx_destroy_window(window->mlx, window->window);
 	if (window->mlx)
@@ -29,17 +31,6 @@ int	window_exit(void *data)
 		free(window->mlx);
 	}
 	exit(0);
-	return (0);
-}
-
-int	draw_window(t_window *win)
-{
-	if (ft_strncmp("julia", win->type, 5) == 0)
-		draw_julia(win);
-	else if (ft_strncmp("ship", win->type, 5) == 0)
-		draw_burning_ship(win);
-	else
-		draw_mandel(win);
 	return (0);
 }
 
@@ -63,7 +54,7 @@ int	key_hook(int key, void *data)
 		window_exit(win);
 		return (0);
 	}
-	draw_window(win);
+	draw_fractal(win);
 	return (0);
 }
 
@@ -83,11 +74,25 @@ int	mouse_hook(int button, int x, int y, void *data)
 	else if (button == 5)
 	{
 		win->size *= 1.2;
-		win->topleft.real -= (double)win->size / 10.0;
-		win->topleft.i -= (double)win->size / 10.0;
+		win->topleft.real -= (double)win->size / 12.0;
+		win->topleft.i -= (double)win->size / 12.0;
 	}
-	draw_window(win);
+	draw_fractal(win);
 	return (0);
+}
+
+void	initialise(char *type, t_complex z, int exp)
+{
+	t_window	win;
+
+	win.scheme = 0;
+	win.topleft.real = -2.5;
+	win.topleft.i = -2.5;
+	win.size = 5.0;
+	win.type = ft_strdup(type);
+	win.z = z;
+	win.exp = exp;
+	make_window(&win);
 }
 
 void	make_window(t_window *win)
@@ -108,7 +113,7 @@ void	make_window(t_window *win)
 			&win->line_len,
 			&win->endian);
 	mlx_hook(win->window, 17, 1L << 17, window_exit, win);
-	mlx_hook(win->window, 12, 1L << 15, draw_window, win);
+	mlx_hook(win->window, 12, 1L << 15, draw_fractal, win);
 	mlx_hook(win->window, 2, 1L << 0, key_hook, win);
 	mlx_hook(win->window, 4, 1L << 2, mouse_hook, win);
 	mlx_loop(win->mlx);
