@@ -81,20 +81,6 @@ int	mouse_hook(int button, int x, int y, void *data)
 	return (0);
 }
 
-void	initialise(char *type, t_complex z, int exp)
-{
-	t_window	win;
-
-	win.scheme = 0;
-	win.topleft.real = -2.5;
-	win.topleft.i = -2.5;
-	win.size = 5.0;
-	win.type = ft_strdup(type);
-	win.z = z;
-	win.exp = exp;
-	make_window(&win);
-}
-
 void	make_window(t_window *win)
 {
 	win->mlx = mlx_init();

@@ -23,7 +23,7 @@
 # define ARROW_RIGHT  65363
 # define ARROW_DOWN   65364
 # ifndef ITERATIONS
-#  define ITERATIONS 15
+#  define ITERATIONS 20
 # endif
 # ifndef WIN_SIZE
 #  define WIN_SIZE 800

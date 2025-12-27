@@ -31,10 +31,7 @@ int	iterations_mandel(t_complex c, int depth)
 	z.i = 0.0;
 	while (i < depth)
 	{
-		if (ft_isnan(z.real) || ft_isnan(z.i) || ft_isnan(c.real)
-			|| ft_isnan(c.i))
-			break ;
-		if (((z.real * z.real) + (z.i * z.i)) > 4)
+		if (((z.real * z.real) + (z.i * z.i)) > 4.0)
 			return (i);
 		z = add_imag(sq_imag(z), c);
 		i++;
@@ -52,10 +49,7 @@ int	iterations_multi(t_complex c, int exp, int depth)
 	z.i = 0.0;
 	while (i < depth)
 	{
-		if (ft_isnan(z.real) || ft_isnan(z.i) || ft_isnan(c.real)
-			|| ft_isnan(c.i))
-			break ;
-		if (((z.real * z.real) + (z.i * z.i)) > 4)
+		if (((z.real * z.real) + (z.i * z.i)) > 4.0)
 			return (i);
 		z = add_imag(pow_imag(z, exp), c);
 		i++;
@@ -73,10 +67,7 @@ int	iterations_burning_ship(t_complex c, int depth)
 	z.i = 0.0;
 	while (i < depth)
 	{
-		if (ft_isnan(z.real) || ft_isnan(z.i) || ft_isnan(c.real)
-			|| ft_isnan(c.i))
-			break ;
-		if (((z.real * z.real) + (z.i * z.i)) > 4)
+		if (((z.real * z.real) + (z.i * z.i)) > 4.0)
 			return (i);
 		z = add_imag(sq_imag(c_abs(z)), c);
 		i++;
@@ -91,10 +82,7 @@ int	iterations_julia(t_complex c, t_complex z, int depth)
 	i = 0;
 	while (i < depth)
 	{
-		if (ft_isnan(z.real) || ft_isnan(z.i) || ft_isnan(c.real)
-			|| ft_isnan(c.i))
-			break ;
-		if (((z.real * z.real) + (z.i * z.i)) > 4)
+		if (((z.real * z.real) + (z.i * z.i)) > 4.0)
 			return (i);
 		z = add_imag(sq_imag(z), c);
 		i++;

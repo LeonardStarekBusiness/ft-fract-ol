@@ -17,20 +17,14 @@ int	color_lava(int color)
 	return ((255 << 16) | ((165 * (10 - color) / 9) << 8));
 }
 
-int	color_ice(int c)
+int	color_ft(int c, int bitshift)
 {
-	int	r;
-	int	g;
-	int	b;
-
-	if (c < 0)
-		c = 0;
-	if (c > 25)
-		c = 25;
-	r = 173 - (173 * c / 25);
-	g = 216 - (216 * c / 25);
-	b = 230 + (25 * c / 25);
-	return ((r << 16) | (g << 8) | b);
+	if (c == -1)
+		return (0x00000000);
+	if (c == 0)
+		return (10 << bitshift);
+	else
+		return (c * 10 << bitshift);
 }
 
 int	color_purple(int c)
@@ -45,43 +39,30 @@ int	color_purple(int c)
 		c = 25;
 	r = 255 - (127 * c / 25);
 	g = 105 - (105 * c / 25);
-	b = 180 - (52 * c / 25);
+	b = 200 - (22 * c / 25);
 	return ((r << 16) | (g << 8) | b);
-}
-
-int	color_neon(int color)
-{
-	if (color == -1)
-		return (0x0039FF14);
-	else
-		return ((color * 4096) % 2147483647);
 }
 
 int	colorscheme(int color, int scheme)
 {
 	if (scheme == 1)
+		return (color_ft(color, 8));
+	else if (scheme == 2)
+		return (color_ft(color, 0));
+	else if (scheme == 3)
+	{
+		if (color == -1)
+			return (0x00dd007f);
+		else
+			return (color_purple(color));
+	}
+	else if (scheme == 4)
 	{
 		if (color == -1)
 			return (0x002e293a);
 		else
 			return (color_lava(color));
 	}
-	else if (scheme == 2)
-	{
-		if (color == -1)
-			return (0x00DDDDDD);
-		else
-			return (color_ice(color));
-	}
-	else if (scheme == 3)
-	{
-		if (color == -1)
-			return (0x00ff007f);
-		else
-			return (color_purple(color));
-	}
-	else if (scheme == 4)
-		return (color_neon(color));
 	else
-		return (color * (30000 / ITERATIONS));
+		return (color_ft(color, 16));
 }
