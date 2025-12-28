@@ -2,11 +2,11 @@ NAME = fractol
 LIBNAME = libft/libft.a
 EXTRFLAGGEN = -lmlx -lXext -lX11
 
-CFLAGGEN = -Wall -Wextra -Werror
+CFLAGGEN = -Wall -Wextra -Werror -Wpedantic
 
 CC = cc
 
-QUELLE_DATEIEN = ft_math.c complex_math.c iterations.c graphics.c draw.c colorscheme.c io.c fractol.c
+QUELLE_DATEIEN = ft_math.c complex_math.c iterations.c graphics.c draw.c colorscheme.c io.c get_time.c fractol.c
 
 OBJEKT_DATEIEN = $(QUELLE_DATEIEN:.c=.o)
 

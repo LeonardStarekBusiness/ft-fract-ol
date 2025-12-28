@@ -39,6 +39,8 @@ int	key_hook(int key, void *data)
 	t_window	*win;
 
 	win = data;
+	win->current_render = now_ms();
+	win->last_render = win->current_render;
 	if (key == KEY_C)
 		win->scheme = (win->scheme + 1) % 5;
 	else if (key == ARROW_LEFT)
@@ -63,6 +65,8 @@ int	mouse_hook(int button, int x, int y, void *data)
 	t_window	*win;
 
 	win = data;
+	win->current_render = now_ms();
+	win->last_render = win->current_render;
 	(void)x;
 	(void)y;
 	if (button == 4)
@@ -102,5 +106,6 @@ void	make_window(t_window *win)
 	mlx_hook(win->window, 12, 1L << 15, draw_fractal, win);
 	mlx_hook(win->window, 2, 1L << 0, key_hook, win);
 	mlx_hook(win->window, 4, 1L << 2, mouse_hook, win);
+	mlx_loop_hook(win->mlx, redraw, win);
 	mlx_loop(win->mlx);
 }

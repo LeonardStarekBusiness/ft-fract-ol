@@ -15,6 +15,7 @@
 #include <stdio.h>
 # include <stdlib.h>
 # include <mlx.h>
+# include <sys/time.h>
 # include "libft/libft.h"
 # define FT_NAN (0.0f / 0.0f)
 # define KEY_C 99
@@ -24,6 +25,9 @@
 # define ARROW_DOWN   65364
 # ifndef ITERATIONS
 #  define ITERATIONS 20
+# endif
+# ifndef REDRAW_MS
+#  define REDRAW_MS 300
 # endif
 # ifndef WIN_SIZE
 #  define WIN_SIZE 800
@@ -58,6 +62,10 @@ typedef struct s_window
 	t_complex	topleft;
 	double		size;
 	int			depth;
+
+	size_t		last_render;
+	size_t		current_render;
+	int			needs_redraw;
 }	t_window;
 
 t_complex	sq_imag(t_complex num);
@@ -81,8 +89,12 @@ void		draw_julia(t_window *win, t_coord pixel);
 void		draw_burning_ship(t_window *win, t_coord pixel);
 t_complex	transform(t_coord pixel, t_window *win);
 
-int			colorscheme(int color, int scheme);
+int	colorscheme(int color, int scheme, int is_loading);
 
 void		throw_message(void);
 double		ft_strtof(char *str);
+
+size_t		now_ms(void);
+int			redraw(t_window *win);
+
 #endif

@@ -12,40 +12,53 @@
 
 #include "fractol.h"
 
-int	draw_fractal(t_window *win)
+int	redraw(t_window *win)
 {
-	int		fractal;
-	t_coord		pixel;
-
-	fractal = 0;
-	if (ft_strncmp("julia", win->type, 5) == 0)
-		fractal = 1;
-	else if (ft_strncmp("ship", win->type, 5) == 0)
-		fractal = 2;
-	else if (ft_strncmp("multi", win->type, 5) == 0)
-		fractal = 3;
-	pixel.x = 0;
-	win->depth = (int)((double)ITERATIONS * (depth_level(win->size)));
-	while (pixel.x < WIN_SIZE)
+	if (!win->needs_redraw)
+		return (0);
+	win->current_render = now_ms();
+	if ((win->current_render - win->last_render) > REDRAW_MS)
 	{
-		pixel.y = 0;
-		while (pixel.y < WIN_SIZE)
-		{
-			if (fractal == 1)
-				draw_julia(win, pixel);
-			else if (fractal == 2)
-				draw_burning_ship(win, pixel);
-			else if (fractal == 3)
-				draw_multi(win, pixel);
-			else
-				draw_mandel(win, pixel);
-			pixel.y++;
-		}
-		pixel.x++;
+		win->needs_redraw = 0;
+		draw_fractal(win);
 	}
-	mlx_put_image_to_window(win->mlx, win->window, win->img, 0, 0);
 	return (0);
 }
+
+int	draw_fractal(t_window *win)
+{
+	if (!((win->current_render - win->last_render) > REDRAW_MS))
+		win->needs_redraw = 1;
+	win->depth = (int)((double)ITERATIONS * (depth_level(win->size)));
+	if (ft_strncmp("julia", win->type, 5) == 0)
+		draw_julia(win, (t_coord){0, 0});
+	else if (ft_strncmp("ship", win->type, 5) == 0)
+		draw_burning_ship(win, (t_coord){0, 0});
+	else if (ft_strncmp("multi", win->type, 5) == 0)
+		draw_multi(win, (t_coord){0, 0});
+	else
+		draw_mandel(win, (t_coord){0, 0});
+	mlx_put_image_to_window(win->mlx, win->window, win->img, 0, 0);
+	if (!((win->current_render - win->last_render) > 200))
+		redraw(win);
+	return (0);
+}
+
+void	initialise(char *type, t_complex z, int exp)
+{
+	t_window	win;
+
+	win.scheme = 0;
+	win.topleft.real = -2.5;
+	win.topleft.i = -2.5;
+	win.size = 5.0;
+	win.type = ft_strdup(type);
+	win.z = z;
+	win.exp = exp;
+	win.current_render = now_ms();
+	make_window(&win);
+}
+
 
 int	main(int ac, char **av)
 {
