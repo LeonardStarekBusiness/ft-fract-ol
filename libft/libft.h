@@ -50,6 +50,8 @@ char	*ft_itoa(int n);
 void	ft_putnbr_fd(int n, int fd);
 char	**ft_split(char const *s, char c);
 
+int		ft_printf(const char *s, ...);
+
 typedef struct pos
 {
 	int	word;
