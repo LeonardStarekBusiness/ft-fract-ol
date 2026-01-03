@@ -12,20 +12,13 @@
 
 #include "fractol.h"
 
-t_complex	c_abs(t_complex complex)
-{
-	if (complex.real < 0.0)
-		complex.real = -complex.real;
-	if (complex.i < 0.0)
-		complex.i = -complex.i;
-	return (complex);
-}
-
-int	iterations_mandel(t_complex c, int depth)
+int	iterations_mandel(t_complex c, int exp, int depth)
 {
 	int			i;
 	t_complex	z;
 
+	if (ft_isnan(c.real) || ft_isnan(c.i))
+		return (-1);
 	i = 0;
 	z.real = 0.0;
 	z.i = 0.0;
@@ -33,17 +26,22 @@ int	iterations_mandel(t_complex c, int depth)
 	{
 		if (((z.real * z.real) + (z.i * z.i)) > 4.0)
 			return (i);
-		z = add_imag(sq_imag(z), c);
+		if (exp == 2)
+			z = add_imag(sq_imag(z), c);
+		else
+			z = add_imag(pow_imag(z, exp), c);
 		i++;
 	}
 	return (-1);
 }
 
-int	iterations_multi(t_complex c, int exp, int depth)
+int	iterations_burning_ship(t_complex c, int exp, int depth)
 {
 	int			i;
 	t_complex	z;
 
+	if (ft_isnan(c.real) || ft_isnan(c.i))
+		return (-1);
 	i = 0;
 	z.real = 0.0;
 	z.i = 0.0;
@@ -51,40 +49,30 @@ int	iterations_multi(t_complex c, int exp, int depth)
 	{
 		if (((z.real * z.real) + (z.i * z.i)) > 4.0)
 			return (i);
-		z = add_imag(pow_imag(z, exp), c);
+		if (exp == 2)
+			z = add_imag(sq_imag(c_abs(z)), c);
+		else
+			z = add_imag(pow_imag(c_abs(z), exp), c);
 		i++;
 	}
 	return (-1);
 }
 
-int	iterations_burning_ship(t_complex c, int depth)
-{
-	int			i;
-	t_complex	z;
-
-	i = 0;
-	z.real = 0.0;
-	z.i = 0.0;
-	while (i < depth)
-	{
-		if (((z.real * z.real) + (z.i * z.i)) > 4.0)
-			return (i);
-		z = add_imag(sq_imag(c_abs(z)), c);
-		i++;
-	}
-	return (-1);
-}
-
-int	iterations_julia(t_complex c, t_complex z, int depth)
+int	iterations_julia(t_complex c, t_complex z, int exp, int depth)
 {
 	int		i;
 
+	if (ft_isnan(c.real) || ft_isnan(c.i))
+		return (-1);
 	i = 0;
 	while (i < depth)
 	{
 		if (((z.real * z.real) + (z.i * z.i)) > 4.0)
 			return (i);
-		z = add_imag(sq_imag(z), c);
+		if (exp == 2)
+			z = add_imag(sq_imag(z), c);
+		else
+			z = add_imag(pow_imag(z, exp), c);
 		i++;
 	}
 	return (-1);

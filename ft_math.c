@@ -44,7 +44,9 @@ t_complex	transform(t_coord pixel, t_window *win)
 {
 	t_complex		fpoint;
 
-	fpoint.real = (((double)pixel.x / (double)WIN_SIZE) * win->size) + win->topleft.real;
-	fpoint.i = (((double)(WIN_SIZE - pixel.y) / (double)WIN_SIZE) * win->size) + win->topleft.i;
+	fpoint.real = (((double)pixel.x / (double)WIN_SIZE) * win->size)
+		+ win->topleft.real;
+	fpoint.i = (((double)(WIN_SIZE - pixel.y) / (double)WIN_SIZE) * win->size)
+		+ win->topleft.i;
 	return (fpoint);
 }

@@ -2,7 +2,7 @@ NAME = fractol
 LIBNAME = libft/libft.a
 EXTRFLAGGEN = -lmlx -lXext -lX11
 
-CFLAGGEN = -Wall -Wextra -Werror -Wpedantic
+CFLAGGEN = -Wall -Wextra -Werror -O3
 
 CC = cc
 

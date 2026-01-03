@@ -12,6 +12,21 @@
 
 #include "fractol.h"
 
+void	ft_put_pixel(t_window *win, t_coord pixel, int iter)
+{
+	win->addr[pixel.y * (win->line_len / 4) + pixel.x]
+		= colorscheme(iter, win->scheme);
+	if (win->needs_redraw)
+	{
+		win->addr[pixel.y * (win->line_len / 4) + (pixel.x + 1)]
+			= colorscheme(iter, win->scheme);
+		win->addr[(pixel.y + 1) * (win->line_len / 4) + pixel.x]
+			= colorscheme(iter, win->scheme);
+		win->addr[(pixel.y + 1) * (win->line_len / 4) + (pixel.x + 1)]
+			= colorscheme(iter, win->scheme);
+	}
+}
+
 int	window_exit(void *data)
 {
 	t_window	*window;
@@ -88,15 +103,11 @@ int	mouse_hook(int button, int x, int y, void *data)
 void	make_window(t_window *win)
 {
 	win->mlx = mlx_init();
-	if (ft_strncmp("julia", win->type, 5) == 0)
-		win->window = mlx_new_window(win->mlx, WIN_SIZE,
-				WIN_SIZE, "JULIA SET");
-	else if (ft_strncmp("ship", win->type, 4) == 0)
-		win->window = mlx_new_window(win->mlx, WIN_SIZE,
-				WIN_SIZE, "BURNING SHIP SET");
-	else
-		win->window = mlx_new_window(win->mlx, WIN_SIZE,
-				WIN_SIZE, "MANDELBROT SET");
+	win->needs_redraw = 0;
+	win->current_render = now_ms();
+	win->last_render = now_ms();
+	win->window = mlx_new_window(win->mlx, WIN_SIZE,
+			WIN_SIZE, win->type);
 	win->img = mlx_new_image(win->mlx, WIN_SIZE, WIN_SIZE);
 	win->addr = (int *)mlx_get_data_addr(win->img,
 			&win->bpp,

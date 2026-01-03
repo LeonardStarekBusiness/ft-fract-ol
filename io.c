@@ -14,11 +14,29 @@
 
 void	throw_message(void)
 {
-	ft_putstr_fd("+-------------------------------------------", 1);
-	ft_putstr_fd("----------------+\n\t\t***PROPER USE***\n\n./fractol", 1);
-	ft_putstr_fd("\tmandelbrot\n\t\tship\n\t\tjulia", 1);
-	ft_putstr_fd("\t\ta\t\tbi\n\t\tmulti\t\tn\n+--------------------------", 1);
-	ft_putstr_fd("---------------------------------+\n", 1);
+	ft_putstr_fd("+-------------------------------------------+\n", 1);
+	ft_putstr_fd("|            ***PROPER USE***               |\n", 1);
+	ft_putstr_fd("|                                           |\n", 1);
+	ft_putstr_fd("| ./fractol    mandelbrot              [n]  |\n", 1);
+	ft_putstr_fd("|              ship                    [n]  |\n", 1);
+	ft_putstr_fd("|              julia         a  bi     [n]  |\n", 1);
+	ft_putstr_fd("+-------------------------------------------+\n", 1);
+}
+
+void	print_formula(char *type, int exp, char **av)
+{
+	ft_printf("\nFormula for the iterations:\n");
+	if (ft_strncmp(type, "julia", 5) != 0)
+		ft_printf("Z(0) = (0, 0i)\nc = parameter", 1);
+	else
+		ft_printf("Z(0) = parameter\nc(0) = (%s, %si)", av[2], av[3]);
+	ft_printf("\nZ(n+1) = ", 1);
+	if (ft_strncmp(type, "ship", 4) == 0)
+		ft_printf("|", 1);
+	ft_printf("Z");
+	if (ft_strncmp(type, "ship", 4) == 0)
+		ft_printf("|", 1);
+	ft_printf("^%d + c\n\n", exp);
 }
 
 double	ft_strtof_util(double fp, char after_comma, char c)

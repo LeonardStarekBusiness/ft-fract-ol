@@ -6,13 +6,12 @@
 /*   By: lstarek <lstarek@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 17:15:46 by lstarek           #+#    #+#             */
-/*   Updated: 2025/12/21 19:56:44 by lstarek          ###   ########.fr       */
+/*   Updated: 2025/12/29 15:15:14 by lstarek          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
-#include <stdio.h>
 # include <stdlib.h>
 # include <mlx.h>
 # include <sys/time.h>
@@ -24,7 +23,7 @@
 # define ARROW_RIGHT  65363
 # define ARROW_DOWN   65364
 # ifndef ITERATIONS
-#  define ITERATIONS 20
+#  define ITERATIONS 24
 # endif
 # ifndef REDRAW_MS
 #  define REDRAW_MS 300
@@ -71,27 +70,29 @@ typedef struct s_window
 t_complex	sq_imag(t_complex num);
 t_complex	pow_imag(t_complex num, int exp);
 t_complex	add_imag(t_complex num1, t_complex num2);
+t_complex	c_abs(t_complex complex);
+t_complex	transform(t_coord pixel, t_window *win);
 double		ft_pow(double x, double y);
 int			ft_isnan(double fp);
-double			depth_level(double size);
+double		depth_level(double size);
 
-int			iterations_mandel(t_complex c, int depth);
-int			iterations_multi(t_complex c, int exp, int depth);
-int			iterations_julia(t_complex c, t_complex z, int depth);
-int			iterations_burning_ship(t_complex c, int depth);
+int			iterations_mandel(t_complex c, int exp, int depth);
+int			iterations_julia(t_complex c, t_complex z, int exp, int depth);
+int			iterations_burning_ship(t_complex c, int exp, int depth);
 
 void		make_window(t_window *win);
-void		initialise(char *type, t_complex z, int exp);
+void		initialise(char *type, t_complex z, int exp, char **av);
 int			draw_fractal(t_window *win);
+void		ft_put_pixel(t_window *win, t_coord pixel, int iter);
+
 void		draw_mandel(t_window *win, t_coord pixel);
-void		draw_multi(t_window *win, t_coord pixel);
 void		draw_julia(t_window *win, t_coord pixel);
 void		draw_burning_ship(t_window *win, t_coord pixel);
-t_complex	transform(t_coord pixel, t_window *win);
 
-int	colorscheme(int color, int scheme, int is_loading);
+int			colorscheme(int color, int scheme);
 
 void		throw_message(void);
+void		print_formula(char *type, int exp, char **av);
 double		ft_strtof(char *str);
 
 size_t		now_ms(void);

@@ -12,6 +12,15 @@
 
 #include "fractol.h"
 
+t_complex	c_abs(t_complex complex)
+{
+	if (complex.real < 0.0)
+		complex.real = -complex.real;
+	if (complex.i < 0.0)
+		complex.i = -complex.i;
+	return (complex);
+}
+
 t_complex	sq_imag(t_complex num)
 {
 	t_complex	square;

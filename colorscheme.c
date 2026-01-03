@@ -12,35 +12,27 @@
 
 #include "fractol.h"
 
-int	color_lava(int color, int is_loading)
+int	color_lava(int color)
 {
-	if (is_loading)
-		return (0x00ff8800 * !(color == -1));
 	return ((255 << 16) | ((165 * (10 - color) / 9) << 8));
 }
 
-int	color_ft(int c, int bitshift, int is_loading)
+int	color_ft(int c, int bitshift)
 {
 	if (c == -1)
 		return (0x00000000);
-	if (is_loading)
-		return (100 << bitshift);
 	if (c == 0)
 		return (10 << bitshift);
 	else
 		return (c * 10 << bitshift);
 }
 
-int	color_purple(int c, int is_loading)
+int	color_purple(int c)
 {
 	int	r;
 	int	g;
 	int	b;
 
-	if (is_loading && c == -1)
-		return (0x00FFC0CB);
-	if (is_loading)
-		return (0x00800080);
 	if (c < 0)
 		c = 0;
 	if (c > 25)
@@ -51,26 +43,26 @@ int	color_purple(int c, int is_loading)
 	return ((r << 16) | (g << 8) | b);
 }
 
-int	colorscheme(int color, int scheme, int is_loading)
+int	colorscheme(int color, int scheme)
 {
 	if (scheme == 1)
-		return (color_ft(color, 8, is_loading));
+		return (color_ft(color, 8));
 	else if (scheme == 2)
-		return (color_ft(color, 0, is_loading));
+		return (color_ft(color, 0));
 	else if (scheme == 3)
 	{
 		if (color == -1)
 			return (0x00dd007f);
 		else
-			return (color_purple(color, is_loading));
+			return (color_purple(color));
 	}
 	else if (scheme == 4)
 	{
 		if (color == -1)
 			return (0x002e293a);
 		else
-			return (color_lava(color, is_loading));
+			return (color_lava(color));
 	}
 	else
-		return (color_ft(color, 16, is_loading));
+		return (color_ft(color, 16));
 }
