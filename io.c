@@ -14,13 +14,13 @@
 
 void	throw_message(void)
 {
-	ft_putstr_fd("+-------------------------------------------+\n", 1);
-	ft_putstr_fd("|            ***PROPER USE***               |\n", 1);
-	ft_putstr_fd("|                                           |\n", 1);
-	ft_putstr_fd("| ./fractol    mandelbrot              [n]  |\n", 1);
-	ft_putstr_fd("|              ship                    [n]  |\n", 1);
-	ft_putstr_fd("|              julia         a  bi     [n]  |\n", 1);
-	ft_putstr_fd("+-------------------------------------------+\n", 1);
+	ft_printf("+-------------------------------------------+\n");
+	ft_printf("|            ***PROPER USE***               |\n");
+	ft_printf("|                                           |\n");
+	ft_printf("| ./fractol    mandelbrot              [n]  |\n");
+	ft_printf("|              ship                    [n]  |\n");
+	ft_printf("|              julia         a  bi     [n]  |\n");
+	ft_printf("+-------------------------------------------+\n");
 }
 
 void	print_formula(char *type, int exp, char **av)
