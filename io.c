@@ -26,15 +26,17 @@ void	throw_message(void)
 void	print_formula(char *type, int exp, char **av)
 {
 	ft_printf("\nFormula for the iterations:\n");
-	if (ft_strncmp(type, "julia", 5) != 0)
-		ft_printf("Z(0) = (0, 0i)\nc = parameter", 1);
+	if (!ft_strncmp(type, "julia", 6))
+		ft_printf("Z(0) = parameter\nc = (%s, %si)", av[2], av[3]);
+	else if (!ft_strncmp(type, "lennert", 8))
+		ft_printf("Z(0) = parameter\nc = (%s, %si)", "-0.5", "-0.5");
 	else
-		ft_printf("Z(0) = parameter\nc(0) = (%s, %si)", av[2], av[3]);
+		ft_printf("Z(0) = (0, 0i)\nc = parameter", 1);
 	ft_printf("\nZ(n+1) = ", 1);
-	if (ft_strncmp(type, "ship", 4) == 0)
+	if (!ft_strncmp(type, "ship", 5) || !ft_strncmp(type, "lennert", 8))
 		ft_printf("|", 1);
 	ft_printf("Z");
-	if (ft_strncmp(type, "ship", 4) == 0)
+	if (!ft_strncmp(type, "ship", 5) || !ft_strncmp(type, "lennert", 8))
 		ft_printf("|", 1);
 	ft_printf("^%d + c\n\n", exp);
 }

@@ -6,7 +6,7 @@ CFLAGGEN = -Wall -Wextra -Werror -O3
 
 CC = cc
 
-QUELLE_DATEIEN = ft_math.c complex_math.c iterations.c graphics.c draw.c colorscheme.c io.c get_time.c fractol.c
+QUELLE_DATEIEN = ft_math.c complex_math.c iterations.c graphics.c draw.c lennert.c colorscheme.c io.c get_time.c fractol.c
 
 OBJEKT_DATEIEN = $(QUELLE_DATEIEN:.c=.o)
 

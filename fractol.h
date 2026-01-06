@@ -78,15 +78,17 @@ double		depth_level(double size);
 
 int			iterations_mandel(t_complex c, int exp, int depth);
 int			iterations_julia(t_complex c, t_complex z, int exp, int depth);
+int			iterations_lennert(t_complex c, t_complex z, int exp, int depth);
 int			iterations_burning_ship(t_complex c, int exp, int depth);
 
 void		make_window(t_window *win);
-void		initialise(char *type, t_complex z, int exp, char **av);
+void		init(char *type, t_complex z, int exp, char **av);
 int			draw_fractal(t_window *win);
 void		ft_put_pixel(t_window *win, t_coord pixel, int iter);
 
 void		draw_mandel(t_window *win, t_coord pixel);
 void		draw_julia(t_window *win, t_coord pixel);
+void		draw_lennert(t_window *win, t_coord pixel);
 void		draw_burning_ship(t_window *win, t_coord pixel);
 
 int			colorscheme(int color, int scheme);
