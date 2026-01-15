@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include <stdio.h>
 
 void	draw_burning_ship(t_window *win, t_coord pixel)
 {
